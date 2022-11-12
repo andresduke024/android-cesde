@@ -86,5 +86,7 @@ public class SesionFragment extends Fragment implements Response.Listener<JSONOb
     @Override
     public void onResponse(JSONObject response) {
         Toast.makeText(getContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
+        Intent intent =new Intent(getContext(), UsuariosActivity.class);
+        startActivity(intent);
     }
 }
