@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class UsuariosActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class UsuariosActivity extends AppCompatActivity{
 
     EditText jetusuario,jetnombre,jetcorreo,jetclave;
     CheckBox jcbactivo;
@@ -34,6 +34,7 @@ public class UsuariosActivity extends AppCompatActivity implements Response.List
     JsonRequest jrq;
     String usr,nombre,correo,clave,url;
     byte sw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,35 +58,45 @@ public class UsuariosActivity extends AppCompatActivity implements Response.List
             jetusuario.requestFocus();
         }
         else{
-            url = "http://172.18.74.101:80/WebServices/consulta.php?usr="+usr;
-            jrq = new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+            url = Constants.API + "consulta.php?usr="+usr;
+
+            jrq = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            sw=1;
+                            Toast.makeText(getApplicationContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
+                            JSONArray jsonArray = response.optJSONArray("datos");
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = jsonArray.getJSONObject(0);//posicion 0 del arreglo....
+                                jetnombre.setText(jsonObject.optString("nombre"));
+                                jetcorreo.setText(jsonObject.optString("correo"));
+                                jetclave.setText(jsonObject.optString("clave"));
+                                if (jsonObject.optString("activo").equals("si"))
+                                    jcbactivo.setChecked(true);
+                                else
+                                    jcbactivo.setChecked(false);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+
             rq.add(jrq);
-        }
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "Usuario no registrado", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        sw=1;
-        Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
-        JSONArray jsonArray = response.optJSONArray("datos");
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = jsonArray.getJSONObject(0);//posicion 0 del arreglo....
-            jetnombre.setText(jsonObject.optString("nombre"));
-            jetcorreo.setText(jsonObject.optString("correo"));
-            jetclave.setText(jsonObject.optString("clave"));
-            if (jsonObject.optString("activo").equals("si"))
-                jcbactivo.setChecked(true);
-            else
-                jcbactivo.setChecked(false);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 
@@ -100,9 +111,9 @@ public class UsuariosActivity extends AppCompatActivity implements Response.List
         }
         else{
             if(sw==0)
-            url = "http://172.18.74.101:80/WebServices/registrocorreo.php";
+            url = Constants.API + "registrocorreo.php";
             else{
-                url="http://172.18.74.101:80/WebServices/actualiza.php";
+                url=Constants.API + "actualiza.php";
                 sw=0;
             }
 
@@ -139,14 +150,14 @@ public class UsuariosActivity extends AppCompatActivity implements Response.List
         }
     }
 
-    public void eliminar(View view){
+    public void Eliminar(View view){
         usr=jetusuario.getText().toString();
         if (usr.isEmpty()) {
             Toast.makeText(this, "El usuario es requerido", Toast.LENGTH_SHORT).show();
             jetusuario.requestFocus();
         }
         else{
-            url = "http://172.18.74.101:80/WebServices/elimina.php";
+            url = Constants.API + "elimina.php";
 
             StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>()
@@ -178,14 +189,14 @@ public class UsuariosActivity extends AppCompatActivity implements Response.List
         }
     }
 
-    public void anular(View view){
+    public void Anular(View view){
         usr=jetusuario.getText().toString();
         if (usr.isEmpty()) {
             Toast.makeText(this, "El usuario es requerido", Toast.LENGTH_SHORT).show();
             jetusuario.requestFocus();
         }
         else{
-            url = "http://172.18.74.101:80/WebServices/anula.php";
+            url = Constants.API + "anula.php";
 
             StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>()

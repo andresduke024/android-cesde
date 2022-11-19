@@ -68,8 +68,7 @@ public class SesionFragment extends Fragment implements Response.Listener<JSONOb
             jetcorreo.requestFocus();
         }
         else{
-//            String url = "http://172.18.74.101:80/WebServices/ingreso.php?correo="+jetcorreo.getText().toString()+"&clave="+jetclave.getText().toString();
-            String url = "http://127.0.0.1:80/WebServices/ingreso.php?correo="+jetcorreo.getText().toString()+"&clave="+jetclave.getText().toString();
+            String url = Constants.API + "ingreso.php?correo="+jetcorreo.getText().toString()+"&clave="+jetclave.getText().toString();
 
             jrq = new JsonObjectRequest(Request.Method.GET,url,null,this,this);
             rq.add(jrq);
@@ -77,10 +76,9 @@ public class SesionFragment extends Fragment implements Response.Listener<JSONOb
         }
     }
 
-
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "Error, usuario no", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Error, usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
     }
 
     @Override

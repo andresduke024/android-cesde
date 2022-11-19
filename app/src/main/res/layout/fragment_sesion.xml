@@ -7,55 +7,65 @@
     tools:context=".SesionFragment">
 
     <TextView
-        android:layout_marginTop="200dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inicio de Sesion"
-        android:gravity="center_horizontal" />
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:text="Iniciar Sesión"
+        android:textSize="26dp" />
 
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Correo Electronico"
-        android:gravity="center_horizontal" />
+        android:text="Correo Electrónico"
+        android:gravity="center_horizontal"
+        android:textSize="18dp"/>
 
     <EditText
         android:id="@+id/etcorreo"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
         android:hint="p.e. micorreo@gmail.com"
         android:inputType="textEmailAddress"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textSize="14dp"/>
 
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Contraseña"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textSize="18dp"/>
 
     <EditText
         android:id="@+id/etclave"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textSize="14dp"/>
 
     <Button
         android:layout_marginTop="20dp"
         android:id="@+id/btingresar"
         android:layout_height="wrap_content"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="40dp"
         android:text="Ingresar"
         android:layout_gravity="center_horizontal" />
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/tvregistrar"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Haz clic AQUI para Registrarse!"
         android:textColor="#3F51B5"
